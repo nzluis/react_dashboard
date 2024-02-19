@@ -1,7 +1,13 @@
+import { NavBar } from "../components/NavBar/NavBar"
+import { AllPhotos } from "../components/AllPhotos/AllPhotos"
+import { FavoritePhotos } from "../components/FavoritePhotos/FavoritePhotos"
+
 function App() {
-  console.log('running')
   return (
     <>
+      <NavBar />
+      <AllPhotos />
+      <FavoritePhotos />
     </>
   )
 }
