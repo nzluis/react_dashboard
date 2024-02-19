@@ -5,16 +5,17 @@ import { addPhoto } from "../../features/favouritesSlice"
 export const AllPhotos = () => {
     const dispatch = useDispatch()
     function handleLike(e) {
-        console.log(e.target)
         dispatch(addPhoto({
-            src: e.target.src
+            id: e.target.dataset.info,
+            src: e.target.src,
+            description: e.target.alt
         }))
     }
     return (
         <>
             <h1>All</h1>
-            {data.map((pic, index) => {
-                return <img key={index} onClick={(e) => handleLike(e)} src={pic.urls.small} alt="" />
+            {data.map((pic) => {
+                return <img data-info={pic.id} key={pic.id} onClick={(e) => handleLike(e)} src={pic.urls.small} alt={pic.alt_description} />
             })}
         </>
     )
