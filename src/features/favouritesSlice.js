@@ -2,15 +2,17 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = []
 
-export const favouriteSlice = createSlice({
+export const favouritesSlice = createSlice({
     name: 'favourites',
     initialState,
     reducers: {
         addPhoto: (favourites, action) => {
-            favourites.push(action.payload)
+           if (!favourites.find(photo => photo.id === action.payload.id)) favourites.push(action.payload)
+        },
+        removePhoto: (favourites, action) => {
+            return  favourites.filter(photo => photo.id !== action.payload) 
         }
     }
 })
 
-export const {addPhoto} = favouriteSlice.actions
-export default favouriteSlice.reducer
+export const {addPhoto, removePhoto} = favouritesSlice.actions
