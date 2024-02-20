@@ -11,8 +11,13 @@ export const favouritesSlice = createSlice({
         },
         removePhoto: (favourites, action) => {
             return  favourites.filter(photo => photo.id !== action.payload) 
+        },
+        editDescription: (favourites, action) => {
+            const favourite = favourites.find(photo => photo.id === action.payload.id)
+            favourite.description = action.payload.description
+            return favourites
         }
     }
 })
 
-export const {addPhoto, removePhoto} = favouritesSlice.actions
+export const {addPhoto, removePhoto, editDescription} = favouritesSlice.actions
