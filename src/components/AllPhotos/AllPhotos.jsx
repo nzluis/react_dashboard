@@ -1,9 +1,27 @@
 import { useDispatch } from "react-redux"
-import { data } from "../../data"
+// import { data } from "../../data"
+// import { data_ } from "../../data2"
 import { addPhoto } from "../../features/favouritesSlice"
+import { useEffect, useState } from "react"
+import { CircularProgress } from "@mui/material"
 
 export const AllPhotos = () => {
     const dispatch = useDispatch()
+    const [allPhotos, setAllPhotos] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        const fetchPhotos = async () => {
+            const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=${import.meta.env.VITE_CLIENT_ID}&count=30&orientation=landscape`)
+            if (!response.ok) throw new Error('Server responds an ' + response.status + ' status code')
+            const photosData = await response.json()
+            setAllPhotos(photosData)
+            setIsLoading(false)
+        }
+        fetchPhotos()
+    }, [])
+
+
     function handleLike(e) {
         dispatch(addPhoto({
             id: e.target.dataset.id,
@@ -20,7 +38,7 @@ export const AllPhotos = () => {
     return (
         <>
             <h1>All</h1>
-            {data.map((pic) => {
+            {!isLoading ? allPhotos.map((pic) => {
                 return <img
                     key={pic.id}
                     onClick={(e) => handleLike(e)}
@@ -31,8 +49,12 @@ export const AllPhotos = () => {
                     data-description={pic.description}
                     data-likes={pic.likes}
                     src={pic.urls.small}
-                    alt={pic.alt_description} />
-            })}
+                    alt={pic.alt_description}
+                />
+            }) :
+                <CircularProgress />
+                // <h1>Loading...</h1>
+            }
         </>
     )
 }
