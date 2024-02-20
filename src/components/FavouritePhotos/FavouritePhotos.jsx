@@ -5,13 +5,22 @@ export const FavouritePhotos = () => {
     const favourites = useSelector((state) => state.favourites)
     const dispatch = useDispatch()
     function handleClick(e) {
-        dispatch(removePhoto(e.target.alt))
+        dispatch(removePhoto(e.target.dataset.id))
     }
     return (
         <>
             <h1>Favourites</h1>
             {favourites && favourites.map((favouritePic) => {
-                return <img key={favouritePic.id} onClick={(e) => handleClick(e)} src={favouritePic.src} alt={favouritePic.id} />
+                return (
+                    <div key={favouritePic.id}>
+                        <img
+                            onClick={(e) => handleClick(e)}
+                            src={favouritePic.src_preview}
+                            alt={favouritePic.alt_description}
+                            data-id={favouritePic.id}
+                        />
+                    </div>
+                )
             })}
         </>
     )
