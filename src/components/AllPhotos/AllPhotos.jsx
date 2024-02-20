@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { data } from "../../data"
 // import { data_ } from "../../data2"
 import { addPhoto } from "../../features/favourites/favouritesSlice"
@@ -10,10 +10,29 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
+import { searchPhotos, searchPhotosError, searchPhotosStatus } from "../../features/search/searchSlice"
+import { getSearchThunk } from "../../features/search/searchThunk"
+import { useSelect } from "@mui/base"
+
 export const AllPhotos = () => {
     const dispatch = useDispatch()
-    const [allPhotos, setAllPhotos] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
+    // const [allPhotos, setAllPhotos] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [searchInput, setSearchInput] = useState('')
+    const allPhotos = useSelector((state) => state.search.photos)
+    console.log(allPhotos)
+
+    useEffect(() => {
+        // si hay termino que buscar
+        if (searchPhotosStatus === 'idle')
+            dispatch(getSearchThunk('forest'))
+        else if (searchPhotosStatus === 'pending')
+            setIsLoading(true)
+        else if (searchPhotosStatus === 'fulfilled')
+            setIsLoading(false)
+        console.log(allPhotos)
+    }, [dispatch, allPhotos, searchPhotosStatus])
+
 
     // useEffect(() => {
 
@@ -55,13 +74,13 @@ export const AllPhotos = () => {
             // onSubmit={handleSubmit}
             >
                 <Input
-                // value={searchInput}
-                // onChange={(e) => { setSearchInput(e.target.value) }}
+                    value={searchInput}
+                    onChange={(e) => { setSearchInput(e.target.value) }}
                 />
                 <button style={{ display: 'none' }} type="submit"></button>
             </form>
             <div className={styles.container}>
-                {!isLoading ? data.map((pic) => {
+                {!isLoading && allPhotos ? allPhotos.map((pic) => {
                     return (
                         <div key={pic.id}>
                             <Zoom style={styles.img}>
@@ -79,7 +98,7 @@ export const AllPhotos = () => {
                     <CircularProgress />
                     // <h1>Loading...</h1>
                 }
-            </div>
+            </div >
         </>
     )
 }
