@@ -6,6 +6,13 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import HeightIcon from '@mui/icons-material/Height';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
+import InfoIcon from '@mui/icons-material/Info';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import styles from './favouritesPhotos.module.css'
+
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+
 import { saveAs } from 'file-saver';
 import { useEffect, useState } from "react";
 
@@ -15,68 +22,72 @@ export const FavouritePhotos = () => {
     const dispatch = useDispatch()
 
     const [editMode, setEditMode] = useState(false)
+    const [selectedPic, setSelectedPic] = useState({})
 
     useEffect(() => {
         localStorage.setItem('favouritePhotos', JSON.stringify(favourites))
     }, [favourites])
 
-    function handleRemove(e) {
-        dispatch(removePhoto(e.target.dataset.id))
-    }
     function handleDownload(url, text) {
-        saveAs(`${url}/download`, `${text}.jpeg`)
+        saveAs(`${url}/download`, `${text}.jpg`)
     }
-    // function handleSubmit() {
-    //     console.log(e.target.value)
-    // }
 
     return (
         <>
             <h1>Favourites</h1>
-            {favourites && favourites.map((favouritePic) => {
-                return (
-                    <div key={favouritePic.id} style={{ display: 'inline' }}>
-                        <img
-                            onClick={(e) => handleRemove(e)}
-                            src={favouritePic.src_preview}
-                            alt={favouritePic.alt_description}
-                            data-id={favouritePic.id}
-                        />
-                        {/* style={{ display: 'none' }} */}
-                        <Card sx={{ maxWidth: 345 }}>
-                            <CardMedia
-                                sx={{ height: 140 }}
-                                image={favouritePic.src_preview}
-                                title={favouritePic.alt_description}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    <ThumbUpIcon />  {favouritePic.likes}
-                                    <HeightIcon /> {favouritePic.height}
-                                    <SettingsEthernetIcon /> {favouritePic.width}
-                                    <br></br>
-                                    <CalendarMonthIcon /> {favouritePic.created_at}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {!editMode ? favouritePic.description : (
-                                        <>
-                                            <TextareaAutosize
-                                                value={favouritePic.description}
-                                                onChange={(e) => dispatch(editDescription({ id: favouritePic.id, description: e.target.value }))}
-                                            />
-                                            {/* <input type="submit" onSubmit={(e) => handleSubmit(e)} /> */}
-                                        </>
-                                    )}
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button onClick={() => handleDownload(favouritePic.download, favouritePic.id)} size="small">Download</Button>
-                                <Button onClick={() => setEditMode(prev => !prev)} size="small">{!editMode ? 'Edit Description' : 'Close Edit'}</Button>
-                            </CardActions>
-                        </Card>
-                    </div>
-                )
-            })}
+            <div className={styles.container}>
+                {favourites && favourites.map((favouritePic) => {
+                    return (
+                        <div key={favouritePic.id} >
+                            <Zoom>
+                                <img
+                                    src={favouritePic.src_regular}
+                                    alt={favouritePic.alt_description}
+                                    width={400}
+                                />
+                            </Zoom>
+                            <InfoIcon onClick={() => setSelectedPic(favouritePic)} />
+                            <RemoveCircleIcon onClick={() => dispatch(removePhoto(favouritePic.id))} />
+                        </div>
+                    )
+                })}
+            </div>
+            {/* style={{ display: 'none' }} */}
+            <Card sx={{ maxWidth: 345 }}>
+                <CardMedia
+                    sx={{ height: 140 }}
+                    image={selectedPic.src_preview}
+                    title={selectedPic.alt_description}
+                    component='img'
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        <ThumbUpIcon />  {selectedPic.likes}
+                        <HeightIcon /> {selectedPic.height}
+                        <SettingsEthernetIcon /> {selectedPic.width}
+                        <br></br>
+                        <CalendarMonthIcon /> {selectedPic.created_at}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        {favourites.map(favouritePic => {
+                            if (favouritePic.id === selectedPic.id) {
+                                return !editMode ? favouritePic.description : (
+                                    <>
+                                        <TextareaAutosize
+                                            value={favouritePic.description}
+                                            onChange={(e) => dispatch(editDescription({ id: favouritePic.id, description: e.target.value }))}
+                                        />
+                                    </>
+                                )
+                            }
+                        })}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button onClick={() => handleDownload(selectedPic.full, selectedPic.id)} size="small">Download</Button>
+                    <Button onClick={() => setEditMode(prev => !prev)} size="small">{!editMode ? 'Edit Description' : 'Close Edit'}</Button>
+                </CardActions>
+            </Card>
         </>
     )
 }
