@@ -3,7 +3,7 @@ import { data } from "../../data"
 // import { data_ } from "../../data2"
 import { addPhoto } from "../../features/favourites/favouritesSlice"
 import { useEffect, useState } from "react"
-import { CircularProgress } from "@mui/material"
+import { CircularProgress, Input } from "@mui/material"
 import styles from './allPhotos.module.css'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
@@ -51,6 +51,15 @@ export const AllPhotos = () => {
     return (
         <>
             <h1>All</h1>
+            <form
+            // onSubmit={handleSubmit}
+            >
+                <Input
+                // value={searchInput}
+                // onChange={(e) => { setSearchInput(e.target.value) }}
+                />
+                <button style={{ display: 'none' }} type="submit"></button>
+            </form>
             <div className={styles.container}>
                 {!isLoading ? data.map((pic) => {
                     return (
