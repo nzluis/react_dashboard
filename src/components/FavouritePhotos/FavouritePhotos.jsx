@@ -7,7 +7,7 @@ import HeightIcon from '@mui/icons-material/Height';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import { saveAs } from 'file-saver';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const FavouritePhotos = () => {
 
@@ -15,6 +15,10 @@ export const FavouritePhotos = () => {
     const dispatch = useDispatch()
 
     const [editMode, setEditMode] = useState(false)
+
+    useEffect(() => {
+        localStorage.setItem('favouritePhotos', JSON.stringify(favourites))
+    }, [favourites])
 
     function handleRemove(e) {
         dispatch(removePhoto(e.target.dataset.id))
