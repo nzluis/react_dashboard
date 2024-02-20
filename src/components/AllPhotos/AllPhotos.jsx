@@ -32,7 +32,8 @@ export const AllPhotos = () => {
             width: e.target.dataset.width,
             height: e.target.dataset.height,
             likes: e.target.dataset.likes,
-            created_at: Date.now()
+            created_at: Date.now(),
+            download: e.target.dataset.download
         }))
     }
     return (
@@ -48,6 +49,7 @@ export const AllPhotos = () => {
                     data-height={pic.height}
                     data-description={pic.description}
                     data-likes={pic.likes}
+                    data-download={pic.links.download}
                     src={pic.urls.small}
                     alt={pic.alt_description}
                 />
