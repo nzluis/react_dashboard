@@ -3,6 +3,9 @@ import { removePhoto, editDescription } from "../../features/favouritesSlice"
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@mui/material"
 import { TextareaAutosize } from "@mui/base"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import HeightIcon from '@mui/icons-material/Height';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import { saveAs } from 'file-saver';
 import { useState } from "react";
 
@@ -45,6 +48,10 @@ export const FavouritePhotos = () => {
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
                                     <ThumbUpIcon />  {favouritePic.likes}
+                                    <HeightIcon /> {favouritePic.height}
+                                    <SettingsEthernetIcon /> {favouritePic.width}
+                                    <br></br>
+                                    <CalendarMonthIcon /> {favouritePic.created_at}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                     {!editMode ? favouritePic.description : (
