@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux"
-// import { data } from "../../data"
+import { data } from "../../data"
 // import { data_ } from "../../data2"
-import { addPhoto } from "../../features/favouritesSlice"
+import { addPhoto } from "../../features/favourites/favouritesSlice"
 import { useEffect, useState } from "react"
 import { CircularProgress } from "@mui/material"
 import styles from './allPhotos.module.css'
@@ -15,23 +15,23 @@ export const AllPhotos = () => {
     const [allPhotos, setAllPhotos] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const fetchPhotos = async () => {
-            const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=${import.meta.env.VITE_CLIENT_ID}&count=30&orientation=landscape`)
-            if (!response.ok) throw new Error('Server responds a ' + response.status + ' status code')
-            const photosData = await response.json()
-            setAllPhotos(photosData)
-            setIsLoading(false)
+    //     const fetchPhotos = async () => {
+    //         const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=${import.meta.env.VITE_CLIENT_ID}&count=30&orientation=landscape`)
+    //         if (!response.ok) throw new Error('Server responds a ' + response.status + ' status code')
+    //         const photosData = await response.json()
+    //         setAllPhotos(photosData)
+    //         setIsLoading(false)
 
-        }
-        try {
-            fetchPhotos()
+    //     }
+    //     try {
+    //         fetchPhotos()
 
-        } catch (error) {
-            throw new Error('Fetch problem by error: ' + error)
-        }
-    }, [])
+    //     } catch (error) {
+    //         throw new Error('Fetch problem by error: ' + error)
+    //     }
+    // }, [])
 
 
     function handleLike(pic) {
@@ -52,7 +52,7 @@ export const AllPhotos = () => {
         <>
             <h1>All</h1>
             <div className={styles.container}>
-                {!isLoading ? allPhotos.map((pic) => {
+                {!isLoading ? data.map((pic) => {
                     return (
                         <div key={pic.id}>
                             <Zoom style={styles.img}>
