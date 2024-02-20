@@ -12,7 +12,7 @@ export const FavouritePhotos = () => {
             <h1>Favourites</h1>
             {favourites && favourites.map((favouritePic) => {
                 return (
-                    <div key={favouritePic.id}>
+                    <div key={favouritePic.id} style={{ display: 'inline' }}>
                         <img
                             onClick={(e) => handleClick(e)}
                             src={favouritePic.src_preview}
