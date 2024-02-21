@@ -80,7 +80,13 @@ export const FavouritePhotos = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Card sx={{ maxWidth: 345 }} className={styles.modal} >
+                <Card sx={{
+                    maxWidth: 345,
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)'
+                }} >
                     <CardMedia
                         sx={{ height: 140 }}
                         image={selectedPic.src_preview}

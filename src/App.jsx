@@ -1,6 +1,6 @@
 import { NavBar } from "./components/NavBar/NavBar"
-import { AllPhotos } from "./components/AllPhotos/AllPhotos"
-import { FavouritePhotos } from "./components/FavouritePhotos/FavouritePhotos"
+import { AllPhotos } from "./pages/AllPhotos/AllPhotos"
+import { FavouritePhotos } from "./pages/FavouritePhotos/FavouritePhotos"
 
 function App() {
   return (
