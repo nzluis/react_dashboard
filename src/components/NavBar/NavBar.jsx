@@ -4,7 +4,6 @@ import { Input } from '@mui/material';
 
 export const NavBar = () => {
     const [searchInput, setSearchInput] = useState('')
-    console.log(searchInput)
     function handleSubmit(e) {
         e.preventDefault()
         alert('sending ' + searchInput)
