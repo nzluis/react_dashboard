@@ -13,3 +13,13 @@
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+.features {
+    display: flex;
+    align-items: center;
+    gap: .3em;
+}
+
+.textarea {
+    width: 100%;
+}
