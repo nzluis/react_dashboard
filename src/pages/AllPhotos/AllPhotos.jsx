@@ -9,6 +9,7 @@ import { addPhoto } from "../../features/favourites/favouritesSlice"
 import { addTerm, getReadyNewRequest, searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
 import { getRandomSearchThunk, getTermSearchThunk } from "../../features/search/searchThunk"
 import { Header } from "../../components/Header/Header";
+import { useLocation } from "react-router-dom";
 
 export const AllPhotos = () => {
     const dispatch = useDispatch()
@@ -18,6 +19,13 @@ export const AllPhotos = () => {
     const status = useSelector(searchStatus)
     const error = useSelector(searchError)
     const term = useSelector(searchTerm)
+
+    const { pathname } = useLocation()
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pathname])
+
 
     useEffect(() => {
         if (term !== '') {

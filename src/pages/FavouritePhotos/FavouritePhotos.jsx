@@ -15,6 +15,7 @@ import 'react-medium-image-zoom/dist/styles.css'
 
 import { saveAs } from 'file-saver';
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 function getFilteredPhotos(photos, searchTerm) {
     return photos.filter(photo => photo.description.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -32,6 +33,12 @@ export const FavouritePhotos = () => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const { pathname } = useLocation()
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pathname])
 
 
     useEffect(() => {
