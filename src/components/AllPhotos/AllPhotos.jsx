@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { data } from "../../data"
+// import { data } from "../../data"
 // import { data_ } from "../../data2"
 import { addPhoto } from "../../features/favourites/favouritesSlice"
 import { useEffect, useState } from "react"
@@ -10,29 +10,49 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
-import { searchPhotos, searchPhotosError, searchPhotosStatus } from "../../features/search/searchSlice"
-import { getSearchThunk } from "../../features/search/searchThunk"
+import { searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
+import { getTermSearchThunk } from "../../features/search/searchThunk"
 import { useSelect } from "@mui/base"
+
+import { addTerm, clearTerm, returnToIdle } from "../../features/search/searchSlice"
 
 export const AllPhotos = () => {
     const dispatch = useDispatch()
     // const [allPhotos, setAllPhotos] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [searchInput, setSearchInput] = useState('')
-    const allPhotos = useSelector((state) => state.search.photos)
-    console.log(allPhotos)
+    const allPhotos = useSelector(searchPhotos)
+    const status = useSelector(searchStatus)
+    const error = useSelector(searchError)
+    const term = useSelector(searchTerm)
 
     useEffect(() => {
-        // si hay termino que buscar
-        if (searchPhotosStatus === 'idle')
-            dispatch(getSearchThunk('forest'))
-        else if (searchPhotosStatus === 'pending')
-            setIsLoading(true)
-        else if (searchPhotosStatus === 'fulfilled')
-            setIsLoading(false)
-        console.log(allPhotos)
-    }, [dispatch, allPhotos, searchPhotosStatus])
+        if (term !== '') {
+            if (status === 'idle') {
+                console.log('----IDLE-----')
+                dispatch(getTermSearchThunk(term))
+            } else if (status === 'pending') {
+                console.log('----PENDING-----')
+                setIsLoading(true)
+            } else if (status === 'fulfilled') {
+                console.log('----FULFILLED-----')
+                setIsLoading(false)
+            }
+        } else if (term === '') {
+            console.log('----EMPTY-----')
+            console.log(status)
 
+        }
+
+
+    }, [dispatch, allPhotos, status, term])
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        dispatch(returnToIdle())
+        dispatch(addTerm(searchInput))
+        setSearchInput('')
+    }
 
     // useEffect(() => {
 
@@ -71,13 +91,12 @@ export const AllPhotos = () => {
         <>
             <h1>All</h1>
             <form
-            // onSubmit={handleSubmit}
+                onSubmit={(e) => handleSubmit(e)}
             >
                 <Input
                     value={searchInput}
                     onChange={(e) => { setSearchInput(e.target.value) }}
                 />
-                <button style={{ display: 'none' }} type="submit"></button>
             </form>
             <div className={styles.container}>
                 {!isLoading && allPhotos ? allPhotos.map((pic) => {
