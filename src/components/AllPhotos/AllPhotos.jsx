@@ -56,7 +56,7 @@ export const AllPhotos = () => {
             src_regular: pic.urls.regular,
             src_full: pic.urls.full,
             alt_description: pic.alt,
-            description: pic.description,
+            description: pic.description || '',
             width: pic.width,
             height: pic.height,
             likes: pic.likes,
