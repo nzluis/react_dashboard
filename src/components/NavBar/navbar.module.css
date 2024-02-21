@@ -1,9 +1,17 @@
+.fixContainer {
+    position: sticky;
+    background-color: white;
+    top: 0;
+    z-index: 100;
+    padding-top: .5em ;
+    padding-bottom: .5em;
+}
+
 .container {
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin:1em 1.5em 1em 0;
-    
 }
 
 .logo {
