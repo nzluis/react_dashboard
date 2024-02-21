@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { removePhoto, editDescription } from "../../features/favourites/favouritesSlice"
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, Modal } from "@mui/material"
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, Modal, Input } from "@mui/material"
 import { TextareaAutosize } from "@mui/base"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import HeightIcon from '@mui/icons-material/Height';
@@ -23,13 +23,15 @@ export const FavouritePhotos = () => {
 
     const [editMode, setEditMode] = useState(false)
     const [selectedPic, setSelectedPic] = useState({})
+    const [searchInput, setSearchInput] = useState('')
+
 
     useEffect(() => {
         localStorage.setItem('favouritePhotos', JSON.stringify(favourites))
     }, [favourites])
 
     function handleDownload(url, text) {
-        saveAs(`${url}/download`, `${text}.jpg`)
+        saveAs(url, text)
     }
 
     const [open, setOpen] = useState(false);
@@ -61,14 +63,13 @@ export const FavouritePhotos = () => {
                     )
                 })}
             </div>
-            {/* style={{ display: 'none' }} */}
             <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Card sx={{ maxWidth: 345 }} className={styles.modal}>
+                <Card sx={{ maxWidth: 345 }} className={styles.modal} >
                     <CardMedia
                         sx={{ height: 140 }}
                         image={selectedPic.src_preview}
@@ -76,30 +77,33 @@ export const FavouritePhotos = () => {
                         component='img'
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            <ThumbUpIcon />  {selectedPic.likes}
-                            <HeightIcon /> {selectedPic.height}
-                            <SettingsEthernetIcon /> {selectedPic.width}
-                            <br></br>
-                            <CalendarMonthIcon /> {selectedPic.created_at}
+                        <Typography gutterBottom variant="h6" component="div">
+                            <div className={styles.features}>
+                                <HeightIcon /> {selectedPic.height}
+                                <SettingsEthernetIcon /> {selectedPic.width}
+                            </div>
+                            <div className={styles.features}>
+                                <CalendarMonthIcon /> {selectedPic.created_at}
+                                <ThumbUpIcon />  {selectedPic.likes}
+                            </div>
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {favourites.map(favouritePic => {
                                 if (favouritePic.id === selectedPic.id) {
                                     return !editMode ? favouritePic.description : (
-                                        <>
-                                            <TextareaAutosize
-                                                value={favouritePic.description}
+                                        <span key={favouritePic.id}>
+                                            <TextareaAutosize className={styles.textarea}
+                                                value={favouritePic.description || ''}
                                                 onChange={(e) => dispatch(editDescription({ id: favouritePic.id, description: e.target.value }))}
                                             />
-                                        </>
+                                        </span>
                                     )
                                 }
                             })}
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button onClick={() => handleDownload(selectedPic.full, selectedPic.id)} size="small">Download</Button>
+                        <Button onClick={() => handleDownload(selectedPic.src_full, selectedPic.id)} size="small">Download</Button>
                         <Button onClick={() => setEditMode(prev => !prev)} size="small">{!editMode ? 'Edit Description' : 'Close Edit'}</Button>
                     </CardActions>
                 </Card>
