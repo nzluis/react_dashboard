@@ -16,6 +16,10 @@ import 'react-medium-image-zoom/dist/styles.css'
 import { saveAs } from 'file-saver';
 import { useEffect, useState } from "react";
 
+function getFilteredPhotos(photos, searchTerm) {
+    return photos.filter(photo => photo.description.toLowerCase().includes(searchTerm.toLowerCase()));
+}
+
 export const FavouritePhotos = () => {
 
     const favourites = useSelector((state) => state.favourites)
@@ -24,6 +28,10 @@ export const FavouritePhotos = () => {
     const [editMode, setEditMode] = useState(false)
     const [selectedPic, setSelectedPic] = useState({})
     const [searchInput, setSearchInput] = useState('')
+    const filterBySearch = getFilteredPhotos(favourites, searchInput)
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
 
     useEffect(() => {
@@ -34,10 +42,6 @@ export const FavouritePhotos = () => {
         saveAs(url, text)
     }
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
     function handleModal(photo) {
         setSelectedPic(photo)
         handleOpen()
@@ -46,8 +50,14 @@ export const FavouritePhotos = () => {
     return (
         <>
             <h1>Favourites</h1>
+            <Input
+                value={searchInput}
+                onChange={(e) => { setSearchInput(e.target.value) }}
+                onKeyDown={(e) => e.key === 'Enter' && setSearchInput('')}
+
+            />
             <div className={styles.container}>
-                {favourites && favourites.map((favouritePic) => {
+                {filterBySearch && filterBySearch.map((favouritePic) => {
                     return (
                         <div key={favouritePic.id} >
                             <Zoom>
