@@ -1,86 +1,53 @@
 import { useDispatch, useSelector } from "react-redux"
-// import { data } from "../../data"
-// import { data_ } from "../../data2"
-import { addPhoto } from "../../features/favourites/favouritesSlice"
 import { useEffect, useState } from "react"
-import { CircularProgress, Input } from "@mui/material"
 import styles from './allPhotos.module.css'
+import { CircularProgress, Input } from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
-
-import { searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
+import { addPhoto } from "../../features/favourites/favouritesSlice"
+import { addTerm, getReadyNewRequest, searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
 import { getRandomSearchThunk, getTermSearchThunk } from "../../features/search/searchThunk"
-
-import { addTerm, clearTerm, returnToIdle } from "../../features/search/searchSlice"
 
 export const AllPhotos = () => {
     const dispatch = useDispatch()
-    // const [allPhotos, setAllPhotos] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [searchInput, setSearchInput] = useState('')
     const allPhotos = useSelector(searchPhotos)
     const status = useSelector(searchStatus)
     const error = useSelector(searchError)
     const term = useSelector(searchTerm)
-    console.log(allPhotos)
-    console.log(status)
 
     useEffect(() => {
         if (term !== '') {
             if (status === 'idle') {
-                console.log('----IDLE-----')
                 dispatch(getTermSearchThunk(term))
             } else if (status === 'pending') {
-                console.log('----PENDING-----')
                 setIsLoading(true)
             } else if (status === 'fulfilled') {
-                console.log('----FULFILLED-----')
                 setIsLoading(false)
             }
         } else if (term === '') {
-            console.log('----EMPTY-----')
             if (status === 'idle') {
-                console.log('----IDLE--EMPTY-----')
                 dispatch(getRandomSearchThunk())
             } else if (status === 'pending') {
-                console.log('----PENDING--EMPTY-----')
                 setIsLoading(true)
             } else if (status === 'fulfilled') {
-                console.log('----FULFILLED--EMPTY-----')
                 setIsLoading(false)
             }
+        } else {
+            alert(`Sorry, there was an error: ${error}`)
         }
 
 
-    }, [dispatch, allPhotos, status, term])
+    }, [dispatch, allPhotos, status, term, error])
 
     function handleSubmit(e) {
         e.preventDefault()
-        dispatch(returnToIdle())
+        dispatch(getReadyNewRequest())
         dispatch(addTerm(searchInput))
         setSearchInput('')
     }
-
-    // useEffect(() => {
-
-    //     const fetchPhotos = async () => {
-    //         const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=${import.meta.env.VITE_CLIENT_ID}&count=30&orientation=landscape`)
-    //         if (!response.ok) throw new Error('Server responds a ' + response.status + ' status code')
-    //         const photosData = await response.json()
-    //         setAllPhotos(photosData)
-    //         setIsLoading(false)
-
-    //     }
-    //     try {
-    //         fetchPhotos()
-
-    //     } catch (error) {
-    //         throw new Error('Fetch problem by error: ' + error)
-    //     }
-    // }, [])
-
 
     function handleLike(pic) {
         dispatch(addPhoto({
@@ -99,9 +66,7 @@ export const AllPhotos = () => {
     return (
         <>
             <h1>All</h1>
-            <form
-                onSubmit={(e) => handleSubmit(e)}
-            >
+            <form onSubmit={(e) => handleSubmit(e)}>
                 <Input
                     value={searchInput}
                     onChange={(e) => { setSearchInput(e.target.value) }}
@@ -124,7 +89,6 @@ export const AllPhotos = () => {
                     )
                 }) :
                     <CircularProgress />
-                    // <h1>Loading...</h1>
                 }
             </div >
         </>

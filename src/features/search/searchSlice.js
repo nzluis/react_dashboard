@@ -16,7 +16,7 @@ export const searchSlice = createSlice({
         clearTerm: (search) => {
             search.term = ''
         },
-        returnToIdle: (search) => {
+        getReadyNewRequest: (search) => {
             search.status = 'idle'
         }
     },
@@ -51,4 +51,4 @@ export const searchPhotos = (state) =>  state.search.photos
 export const searchStatus = (state) => state.search.status
 export const searchError = (state) =>  state.search.error
 export const searchTerm = (state) =>  state.search.term
-export const {addTerm, clearTerm, returnToIdle} = searchSlice.actions
+export const {addTerm, clearTerm, getReadyNewRequest} = searchSlice.actions
