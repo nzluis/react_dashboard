@@ -49,15 +49,29 @@ export const FavouritePhotos = () => {
 
     return (
         <>
-            <h1>Favourites</h1>
-            <Input
-                placeholder="Find in your photos..."
-                value={searchInput}
-                onChange={(e) => { setSearchInput(e.target.value) }}
-                onKeyDown={(e) => e.key === 'Enter' && setSearchInput('')}
-
-            />
             <div className={styles.container}>
+                <div className={styles.first_column}>
+                    <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                        <input
+                            placeholder="SEARCH ON YOUR PHOTOS..."
+                            className={styles.input}
+                            value={searchInput}
+                            onChange={(e) => { setSearchInput(e.target.value) }}
+                            onKeyDown={(e) => e.key === 'Enter' && setSearchInput('')}
+                        />
+                        <button style={{ display: 'none' }} type="submit"></button>
+                    </form>
+                    <h1 className={styles.h1}>FIND YOUR VISION</h1>
+                </div>
+                <div className={styles.second_column}>
+                    <h2 className={styles.h2}>YOUR LOCAL PHOTO STORAGE</h2>
+                    <h3 className={styles.h3}>Manage all your favourite photos as you wish</h3>
+                </div>
+            </div>
+            <div className={styles.cards_container}>
                 {filterBySearch && filterBySearch.map((favouritePic) => {
                     return (
                         <div key={favouritePic.id} >
