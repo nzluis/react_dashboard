@@ -11,8 +11,7 @@ import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
 import { searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
-import { getTermSearchThunk } from "../../features/search/searchThunk"
-import { useSelect } from "@mui/base"
+import { getRandomSearchThunk, getTermSearchThunk } from "../../features/search/searchThunk"
 
 import { addTerm, clearTerm, returnToIdle } from "../../features/search/searchSlice"
 
@@ -25,6 +24,8 @@ export const AllPhotos = () => {
     const status = useSelector(searchStatus)
     const error = useSelector(searchError)
     const term = useSelector(searchTerm)
+    console.log(allPhotos)
+    console.log(status)
 
     useEffect(() => {
         if (term !== '') {
@@ -40,8 +41,16 @@ export const AllPhotos = () => {
             }
         } else if (term === '') {
             console.log('----EMPTY-----')
-            console.log(status)
-
+            if (status === 'idle') {
+                console.log('----IDLE--EMPTY-----')
+                dispatch(getRandomSearchThunk())
+            } else if (status === 'pending') {
+                console.log('----PENDING--EMPTY-----')
+                setIsLoading(true)
+            } else if (status === 'fulfilled') {
+                console.log('----FULFILLED--EMPTY-----')
+                setIsLoading(false)
+            }
         }
 
 
