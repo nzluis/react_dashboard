@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { removePhoto, editDescription } from "../../features/favourites/favouritesSlice"
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@mui/material"
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, Modal } from "@mui/material"
 import { TextareaAutosize } from "@mui/base"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import HeightIcon from '@mui/icons-material/Height';
@@ -32,6 +32,15 @@ export const FavouritePhotos = () => {
         saveAs(`${url}/download`, `${text}.jpg`)
     }
 
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    function handleModal(photo) {
+        setSelectedPic(photo)
+        handleOpen()
+    }
+
     return (
         <>
             <h1>Favourites</h1>
@@ -46,48 +55,55 @@ export const FavouritePhotos = () => {
                                     width={400}
                                 />
                             </Zoom>
-                            <InfoIcon onClick={() => setSelectedPic(favouritePic)} />
+                            <InfoIcon onClick={() => handleModal(favouritePic)} />
                             <RemoveCircleIcon onClick={() => dispatch(removePhoto(favouritePic.id))} />
                         </div>
                     )
                 })}
             </div>
             {/* style={{ display: 'none' }} */}
-            <Card sx={{ maxWidth: 345 }}>
-                <CardMedia
-                    sx={{ height: 140 }}
-                    image={selectedPic.src_preview}
-                    title={selectedPic.alt_description}
-                    component='img'
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        <ThumbUpIcon />  {selectedPic.likes}
-                        <HeightIcon /> {selectedPic.height}
-                        <SettingsEthernetIcon /> {selectedPic.width}
-                        <br></br>
-                        <CalendarMonthIcon /> {selectedPic.created_at}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {favourites.map(favouritePic => {
-                            if (favouritePic.id === selectedPic.id) {
-                                return !editMode ? favouritePic.description : (
-                                    <>
-                                        <TextareaAutosize
-                                            value={favouritePic.description}
-                                            onChange={(e) => dispatch(editDescription({ id: favouritePic.id, description: e.target.value }))}
-                                        />
-                                    </>
-                                )
-                            }
-                        })}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button onClick={() => handleDownload(selectedPic.full, selectedPic.id)} size="small">Download</Button>
-                    <Button onClick={() => setEditMode(prev => !prev)} size="small">{!editMode ? 'Edit Description' : 'Close Edit'}</Button>
-                </CardActions>
-            </Card>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Card sx={{ maxWidth: 345 }} className={styles.modal}>
+                    <CardMedia
+                        sx={{ height: 140 }}
+                        image={selectedPic.src_preview}
+                        title={selectedPic.alt_description}
+                        component='img'
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            <ThumbUpIcon />  {selectedPic.likes}
+                            <HeightIcon /> {selectedPic.height}
+                            <SettingsEthernetIcon /> {selectedPic.width}
+                            <br></br>
+                            <CalendarMonthIcon /> {selectedPic.created_at}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            {favourites.map(favouritePic => {
+                                if (favouritePic.id === selectedPic.id) {
+                                    return !editMode ? favouritePic.description : (
+                                        <>
+                                            <TextareaAutosize
+                                                value={favouritePic.description}
+                                                onChange={(e) => dispatch(editDescription({ id: favouritePic.id, description: e.target.value }))}
+                                            />
+                                        </>
+                                    )
+                                }
+                            })}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button onClick={() => handleDownload(selectedPic.full, selectedPic.id)} size="small">Download</Button>
+                        <Button onClick={() => setEditMode(prev => !prev)} size="small">{!editMode ? 'Edit Description' : 'Close Edit'}</Button>
+                    </CardActions>
+                </Card>
+            </Modal >
         </>
     )
 }
