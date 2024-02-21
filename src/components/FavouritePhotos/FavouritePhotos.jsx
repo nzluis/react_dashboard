@@ -51,6 +51,7 @@ export const FavouritePhotos = () => {
         <>
             <h1>Favourites</h1>
             <Input
+                placeholder="Find in your photos..."
                 value={searchInput}
                 onChange={(e) => { setSearchInput(e.target.value) }}
                 onKeyDown={(e) => e.key === 'Enter' && setSearchInput('')}

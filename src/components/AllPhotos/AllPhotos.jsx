@@ -68,6 +68,7 @@ export const AllPhotos = () => {
             <h1>All</h1>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <Input
+                    placeholder="Look for your pics.."
                     value={searchInput}
                     onChange={(e) => { setSearchInput(e.target.value) }}
                 />
