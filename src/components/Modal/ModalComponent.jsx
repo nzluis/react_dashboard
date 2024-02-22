@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Modal, TextareaAutosize, Typography } from "@mui/material"
-import styles from './ModalComponent.module.css'
+import styles from './modalComponent.module.css'
 import { saveAs } from 'file-saver';
 import { useState } from "react";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';

@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
-import { removePhoto, addMyPhotosTerm } from "../../features/favourites/favouritesSlice"
+import { removePhoto } from "../../features/favourites/favouritesSlice"
 import { Select, MenuItem, InputLabel, FormControl } from "@mui/material"
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import styles from './favouritesPhotos.module.css'
-import { useMediaQuery } from 'react-responsive'
 
 
 import Zoom from 'react-medium-image-zoom'
@@ -13,6 +12,7 @@ import 'react-medium-image-zoom/dist/styles.css'
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ModalComponent } from "../../components/Modal/ModalComponent";
+import { Header } from "../../components/Header/Header";
 
 function getFilteredPhotos(photos, searchTerm) {
     return photos.filter(photo => photo.description.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -31,16 +31,12 @@ export const FavouritePhotos = () => {
 
     const [selectedPic, setSelectedPic] = useState({})
     const [orderBy, setOrderBy] = useState('')
-    const [searchInput, setSearchInput] = useState('')
     const [open, setOpen] = useState(false);
 
 
 
     const filterBySearch = getOrderedPhotos(getFilteredPhotos(favourites, term), orderBy)
     const { pathname } = useLocation()
-    const isDesktopOrLaptop = useMediaQuery({
-        query: '(min-width: 1000px)'
-    })
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -58,9 +54,12 @@ export const FavouritePhotos = () => {
         setOpen(true)
     }
 
+
+
     return (
         <>
-            {isDesktopOrLaptop && <div className={styles.container}>
+            <Header />
+            {/* {isDesktopOrLaptop && <div className={styles.container}>
                 <div className={styles.first_column}>
                     <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>
@@ -81,7 +80,7 @@ export const FavouritePhotos = () => {
                     <h2 className={styles.h2}>YOUR LOCAL PHOTO STORAGE</h2>
                     <h3 className={styles.h3}>Manage all your favourite photos as you wish</h3>
                 </div>
-            </div>}
+            </div>} */}
             <div className={styles.cards_container}>
                 <FormControl fullWidth >
                     <InputLabel className={styles.select} id="orderby">Order by</InputLabel>

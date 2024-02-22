@@ -6,23 +6,19 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import { addPhoto } from "../../features/favourites/favouritesSlice"
-import { addTerm, getReadyNewRequest, searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
+import { searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
 import { getRandomSearchThunk, getTermSearchThunk } from "../../features/search/searchThunk"
 import { useLocation } from "react-router-dom";
-import { useMediaQuery } from 'react-responsive'
+import { Header } from "../../components/Header/Header";
 
 export const AllPhotos = () => {
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(true)
-    const [searchInput, setSearchInput] = useState('')
     const allPhotos = useSelector(searchPhotos)
     const status = useSelector(searchStatus)
     const error = useSelector(searchError)
     const term = useSelector(searchTerm)
     const { pathname } = useLocation()
-    const isDesktopOrLaptop = useMediaQuery({
-        query: '(min-width: 1000px)'
-    })
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -53,12 +49,6 @@ export const AllPhotos = () => {
 
     }, [dispatch, allPhotos, status, term, error])
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        dispatch(getReadyNewRequest())
-        dispatch(addTerm(searchInput))
-        setSearchInput('')
-    }
 
     function handleLike(pic) {
         dispatch(addPhoto({
@@ -76,7 +66,8 @@ export const AllPhotos = () => {
     }
     return (
         <>
-            {isDesktopOrLaptop && <div className={styles.container}>
+            <Header />
+            {/* {isDesktopOrLaptop && <div className={styles.container}>
                 <div className={styles.first_column}>
                     <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>
@@ -96,7 +87,7 @@ export const AllPhotos = () => {
                     <h2 className={styles.h2}>BEST FREE PICTURES ON INTERNET</h2>
                     <h3 className={styles.h3}>All kind of images shared by their creators</h3>
                 </div>
-            </div>}
+            </div>} */}
             <div className={styles.cards_container}>
                 {!isLoading && allPhotos ? allPhotos.map((pic) => {
                     return (
