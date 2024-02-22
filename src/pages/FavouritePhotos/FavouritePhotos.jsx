@@ -32,7 +32,10 @@ export const FavouritePhotos = () => {
     const filterBySearch = getFilteredPhotos(favourites, searchInput)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        setEditMode(false)
+    }
 
     const { pathname } = useLocation()
 
