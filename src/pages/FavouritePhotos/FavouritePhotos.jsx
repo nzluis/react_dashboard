@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { removePhoto, editDescription } from "../../features/favourites/favouritesSlice"
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, Modal, Input, Select, MenuItem, InputLabel, FormControl } from "@mui/material"
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, Modal, Select, MenuItem, InputLabel, FormControl } from "@mui/material"
 import { TextareaAutosize } from "@mui/base"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import HeightIcon from '@mui/icons-material/Height';

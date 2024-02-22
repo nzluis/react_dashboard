@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import styles from './allPhotos.module.css'
-import { CircularProgress, Input } from "@mui/material"
+import { CircularProgress } from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import { addPhoto } from "../../features/favourites/favouritesSlice"
 import { addTerm, getReadyNewRequest, searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
 import { getRandomSearchThunk, getTermSearchThunk } from "../../features/search/searchThunk"
-import { Header } from "../../components/Header/Header";
 import { useLocation } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive'
 
@@ -20,12 +19,10 @@ export const AllPhotos = () => {
     const status = useSelector(searchStatus)
     const error = useSelector(searchError)
     const term = useSelector(searchTerm)
-
     const { pathname } = useLocation()
     const isDesktopOrLaptop = useMediaQuery({
         query: '(min-width: 1000px)'
     })
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1000px)' })
 
     useEffect(() => {
         window.scrollTo(0, 0)
