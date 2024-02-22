@@ -9,6 +9,8 @@ import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import styles from './favouritesPhotos.module.css'
+import { useMediaQuery } from 'react-responsive'
+
 
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
@@ -38,6 +40,9 @@ export const FavouritePhotos = () => {
     }
 
     const { pathname } = useLocation()
+    const isDesktopOrLaptop = useMediaQuery({
+        query: '(min-width: 1000px)'
+    })
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -59,7 +64,7 @@ export const FavouritePhotos = () => {
 
     return (
         <>
-            <div className={styles.container}>
+            {isDesktopOrLaptop && <div className={styles.container}>
                 <div className={styles.first_column}>
                     <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>
@@ -80,7 +85,7 @@ export const FavouritePhotos = () => {
                     <h2 className={styles.h2}>YOUR LOCAL PHOTO STORAGE</h2>
                     <h3 className={styles.h3}>Manage all your favourite photos as you wish</h3>
                 </div>
-            </div>
+            </div>}
             <div className={styles.cards_container}>
                 {filterBySearch && filterBySearch.map((favouritePic) => {
                     return (
@@ -112,7 +117,7 @@ export const FavouritePhotos = () => {
                     transform: 'translate(-50%, -50%)'
                 }} >
                     <CardMedia
-                        sx={{ height: 140 }}
+                        sx={{ width: '425px' }}
                         image={selectedPic.src_preview}
                         title={selectedPic.alt_description}
                         component='img'

@@ -10,6 +10,7 @@ import { addTerm, getReadyNewRequest, searchPhotos, searchError, searchStatus, s
 import { getRandomSearchThunk, getTermSearchThunk } from "../../features/search/searchThunk"
 import { Header } from "../../components/Header/Header";
 import { useLocation } from "react-router-dom";
+import { useMediaQuery } from 'react-responsive'
 
 export const AllPhotos = () => {
     const dispatch = useDispatch()
@@ -21,6 +22,10 @@ export const AllPhotos = () => {
     const term = useSelector(searchTerm)
 
     const { pathname } = useLocation()
+    const isDesktopOrLaptop = useMediaQuery({
+        query: '(min-width: 1000px)'
+    })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1000px)' })
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -74,7 +79,7 @@ export const AllPhotos = () => {
     }
     return (
         <>
-            <div className={styles.container}>
+            {isDesktopOrLaptop && <div className={styles.container}>
                 <div className={styles.first_column}>
                     <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>
@@ -94,7 +99,7 @@ export const AllPhotos = () => {
                     <h2 className={styles.h2}>BEST FREE PICTURES ON INTERNET</h2>
                     <h3 className={styles.h3}>All kind of images shared by their creators</h3>
                 </div>
-            </div>
+            </div>}
             <div className={styles.cards_container}>
                 {!isLoading && allPhotos ? allPhotos.map((pic) => {
                     return (
