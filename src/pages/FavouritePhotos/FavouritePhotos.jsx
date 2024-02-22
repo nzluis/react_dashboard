@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { removePhoto, editDescription } from "../../features/favourites/favouritesSlice"
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, Modal, Input } from "@mui/material"
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, Modal, Input, Select, MenuItem, InputLabel, FormControl } from "@mui/material"
 import { TextareaAutosize } from "@mui/base"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import HeightIcon from '@mui/icons-material/Height';
@@ -43,6 +43,7 @@ export const FavouritePhotos = () => {
     const isDesktopOrLaptop = useMediaQuery({
         query: '(min-width: 1000px)'
     })
+    const [orderBy, setOrderBy] = useState()
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -87,6 +88,22 @@ export const FavouritePhotos = () => {
                 </div>
             </div>}
             <div className={styles.cards_container}>
+                <FormControl fullWidth >
+                    <InputLabel className={styles.select} id="orderby">Order by</InputLabel>
+                    <Select className={styles.select}
+                        labelId="orderby"
+                        id="selectOrder"
+                        value={orderBy}
+                        label="Order by"
+                        onChange={(e) => setOrderBy(e.target.value)}
+                    >
+                        <MenuItem value="newer">Newer</MenuItem>
+                        <MenuItem value="older">Older</MenuItem>
+                        <MenuItem value="weight">Weight</MenuItem>
+                        <MenuItem value="height">Height</MenuItem>
+                        <MenuItem value="likes">Likes</MenuItem>
+                    </Select>
+                </FormControl>
                 {filterBySearch && filterBySearch.map((favouritePic) => {
                     return (
                         <div className={styles.card} key={favouritePic.id} >
