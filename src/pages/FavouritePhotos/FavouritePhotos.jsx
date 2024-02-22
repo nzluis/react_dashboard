@@ -23,6 +23,11 @@ function getFilteredPhotos(photos, searchTerm) {
     return photos.filter(photo => photo.description.toLowerCase().includes(searchTerm.toLowerCase()));
 }
 
+function getOrderedPhotos(photos, filter) {
+    if (filter === 'newer') return photos.sort((prevPhoto, nextPhoto) => nextPhoto['created_at'] - prevPhoto['created_at']).reverse()
+    return photos.sort((prevPhoto, nextPhoto) => nextPhoto[filter] - prevPhoto[filter])
+}
+
 export const FavouritePhotos = () => {
 
     const favourites = useSelector((state) => state.favourites)
@@ -30,8 +35,8 @@ export const FavouritePhotos = () => {
 
     const [editMode, setEditMode] = useState(false)
     const [selectedPic, setSelectedPic] = useState({})
+    const [orderBy, setOrderBy] = useState('')
     const [searchInput, setSearchInput] = useState('')
-    const filterBySearch = getFilteredPhotos(favourites, searchInput)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
@@ -39,11 +44,11 @@ export const FavouritePhotos = () => {
         setEditMode(false)
     }
 
+    const filterBySearch = getOrderedPhotos(getFilteredPhotos(favourites, searchInput), orderBy)
     const { pathname } = useLocation()
     const isDesktopOrLaptop = useMediaQuery({
         query: '(min-width: 1000px)'
     })
-    const [orderBy, setOrderBy] = useState()
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -97,9 +102,9 @@ export const FavouritePhotos = () => {
                         label="Order by"
                         onChange={(e) => setOrderBy(e.target.value)}
                     >
+                        <MenuItem value="created_at">Older</MenuItem>
                         <MenuItem value="newer">Newer</MenuItem>
-                        <MenuItem value="older">Older</MenuItem>
-                        <MenuItem value="weight">Weight</MenuItem>
+                        <MenuItem value="width">Width</MenuItem>
                         <MenuItem value="height">Height</MenuItem>
                         <MenuItem value="likes">Likes</MenuItem>
                     </Select>
