@@ -100,3 +100,32 @@ body {
     margin-bottom: 1.5em;
 
 }
+
+.card {
+    position:relative
+}
+
+.infoIcon, .removeIcon {
+   position: static;
+    cursor: pointer;
+    transform: scale(1.2);
+    opacity: 15%; 
+}
+
+.infoIcon{
+    position: absolute;
+    top: 50%;
+    left: 40%;
+        transform: scale(1.2) translate(-50%, -50%);
+}
+
+.removeIcon{
+    position: absolute;
+    top: 50%;
+    left: 60%;
+        transform: scale(1.2) translate(-50%, -50%);
+}
+.infoIcon:hover, .removeIcon:hover {
+    opacity: 100%;
+    transform: scale(1.1) translate(-50%, -50%);
+} 

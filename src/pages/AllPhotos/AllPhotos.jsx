@@ -98,7 +98,7 @@ export const AllPhotos = () => {
             <div className={styles.cards_container}>
                 {!isLoading && allPhotos ? allPhotos.map((pic) => {
                     return (
-                        <div key={pic.id}>
+                        <div key={pic.id} className={styles.card}>
                             <Zoom style={styles.img}>
                                 <img
                                     src={pic.urls.regular}
@@ -107,7 +107,7 @@ export const AllPhotos = () => {
                                     loading="lazy"
                                 />
                             </Zoom>
-                            <AddCircleIcon onClick={() => handleLike(pic)} />
+                            <AddCircleIcon fontSize="large" className={styles.addIcon} onClick={() => handleLike(pic)} />
                         </div>
                     )
                 }) :

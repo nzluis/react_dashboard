@@ -81,7 +81,7 @@ export const FavouritePhotos = () => {
             <div className={styles.cards_container}>
                 {filterBySearch && filterBySearch.map((favouritePic) => {
                     return (
-                        <div key={favouritePic.id} >
+                        <div className={styles.card} key={favouritePic.id} >
                             <Zoom>
                                 <img
                                     src={favouritePic.src_regular}
@@ -89,8 +89,8 @@ export const FavouritePhotos = () => {
                                     width={400}
                                 />
                             </Zoom>
-                            <InfoIcon onClick={() => handleModal(favouritePic)} />
-                            <RemoveCircleIcon onClick={() => dispatch(removePhoto(favouritePic.id))} />
+                            <InfoIcon className={styles.infoIcon} fontSize="large" onClick={() => handleModal(favouritePic)} />
+                            <RemoveCircleIcon className={styles.removeIcon} fontSize="large" onClick={() => dispatch(removePhoto(favouritePic.id))} />
                         </div>
                     )
                 })}

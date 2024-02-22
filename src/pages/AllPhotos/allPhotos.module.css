@@ -88,3 +88,20 @@ body {
     margin-bottom: 1.5em;
 
 }
+
+.card {
+    position:relative
+}
+
+.addIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    cursor: pointer;
+    transform: scale(1.2) translate(-50%, -50%);
+    opacity: 15%;
+}
+.addIcon:hover {
+    opacity: 100%;
+    transform: scale(1.1) translate(-50%, -50%);
+}
