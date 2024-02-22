@@ -1,0 +1,9 @@
+.features {
+    display: flex;
+    align-items: center;
+    gap: .3em;
+}
+
+.textarea {
+    width: 100%;
+}

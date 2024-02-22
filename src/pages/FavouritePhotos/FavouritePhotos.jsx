@@ -1,11 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
-import { removePhoto, editDescription, addMyPhotosTerm } from "../../features/favourites/favouritesSlice"
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, Modal, Select, MenuItem, InputLabel, FormControl } from "@mui/material"
-import { TextareaAutosize } from "@mui/base"
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import HeightIcon from '@mui/icons-material/Height';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
+import { removePhoto, addMyPhotosTerm } from "../../features/favourites/favouritesSlice"
+import { Select, MenuItem, InputLabel, FormControl } from "@mui/material"
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import styles from './favouritesPhotos.module.css'
@@ -15,9 +10,9 @@ import { useMediaQuery } from 'react-responsive'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
-import { saveAs } from 'file-saver';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { ModalComponent } from "../../components/Modal/ModalComponent";
 
 function getFilteredPhotos(photos, searchTerm) {
     return photos.filter(photo => photo.description.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -34,16 +29,12 @@ export const FavouritePhotos = () => {
     const term = useSelector((state) => state.favourites.term)
     const dispatch = useDispatch()
 
-    const [editMode, setEditMode] = useState(false)
     const [selectedPic, setSelectedPic] = useState({})
     const [orderBy, setOrderBy] = useState('')
     const [searchInput, setSearchInput] = useState('')
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => {
-        setOpen(false);
-        setEditMode(false)
-    }
+
+
 
     const filterBySearch = getOrderedPhotos(getFilteredPhotos(favourites, term), orderBy)
     const { pathname } = useLocation()
@@ -60,13 +51,11 @@ export const FavouritePhotos = () => {
         localStorage.setItem('favouritePhotos', JSON.stringify(favourites))
     }, [favourites])
 
-    function handleDownload(url, text) {
-        saveAs(url, text)
-    }
+
 
     function handleModal(photo) {
         setSelectedPic(photo)
-        handleOpen()
+        setOpen(true)
     }
 
     return (
@@ -126,57 +115,7 @@ export const FavouritePhotos = () => {
                     )
                 })}
             </div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Card sx={{
-                    maxWidth: 345,
-                    position: 'absolute',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)'
-                }} >
-                    <CardMedia
-                        sx={{ width: '425px' }}
-                        image={selectedPic.src_preview}
-                        title={selectedPic.alt_description}
-                        component='img'
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h6" component="div">
-                            <div className={styles.features}>
-                                <HeightIcon /> {selectedPic.height}
-                                <SettingsEthernetIcon /> {selectedPic.width}
-                            </div>
-                            <div className={styles.features}>
-                                <CalendarMonthIcon /> {selectedPic.created_at}
-                                <ThumbUpIcon />  {selectedPic.likes}
-                            </div>
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {favourites.map(favouritePic => {
-                                if (favouritePic.id === selectedPic.id) {
-                                    return !editMode ? favouritePic.description : (
-                                        <span key={favouritePic.id}>
-                                            <TextareaAutosize className={styles.textarea}
-                                                value={favouritePic.description || ''}
-                                                onChange={(e) => dispatch(editDescription({ id: favouritePic.id, description: e.target.value }))}
-                                            />
-                                        </span>
-                                    )
-                                }
-                            })}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button onClick={() => handleDownload(selectedPic.src_full, selectedPic.id)} size="small">Download</Button>
-                        <Button onClick={() => setEditMode(prev => !prev)} size="small">{!editMode ? 'Edit Description' : 'Close Edit'}</Button>
-                    </CardActions>
-                </Card>
-            </Modal >
+            <ModalComponent favourites={favourites} open={open} setOpen={setOpen} selectedPic={selectedPic} />
         </>
     )
 }

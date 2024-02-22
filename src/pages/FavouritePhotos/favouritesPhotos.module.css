@@ -8,19 +8,6 @@
     background-color: #d9d9d93a;
 }
 
-.features {
-    display: flex;
-    align-items: center;
-    gap: .3em;
-}
-
-.textarea {
-    width: 100%;
-}
-
----------------------
-
-
 body {
     font-family: Roboto;
 }
