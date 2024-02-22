@@ -1,23 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = localStorage.getItem('favouritePhotos') ? JSON.parse(localStorage.getItem('favouritePhotos')) : []
+const initialState = localStorage.getItem('favouritePhotos') ? JSON.parse(localStorage.getItem('favouritePhotos')) : {photos: [], term: ''}
 
 export const favouritesSlice = createSlice({
     name: 'favourites',
     initialState,
     reducers: {
-        addPhoto: (favourites, action) => {
-           if (!favourites.find(photo => photo.id === action.payload.id)) favourites.push(action.payload)
+        addPhoto: (state, action) => {
+           if (!state.photos.find(photo => photo.id === action.payload.id)) state.photos.push(action.payload)
         },
-        removePhoto: (favourites, action) => {
-            return  favourites.filter(photo => photo.id !== action.payload) 
+        removePhoto: (state, action) => {
+            return  state.photos.filter(photo => photo.id !== action.payload) 
         },
-        editDescription: (favourites, action) => {
-            const favouriteToEdit = favourites.find(photo => photo.id === action.payload.id)
+        editDescription: (state, action) => {
+            const favouriteToEdit = state.photos.find(photo => photo.id === action.payload.id)
             favouriteToEdit.description = action.payload.description
-            return favourites
+            return state
+        },
+        addMyPhotosTerm: (state, action) => {
+            state.term = action.payload
+            return state
+        },
+        clearMyPhotosTerm: (state) => {
+            state.term = ''
+            return state
         }
     }
 })
 
-export const {addPhoto, removePhoto, editDescription} = favouritesSlice.actions
+export const {addPhoto, removePhoto, editDescription, addMyPhotosTerm, clearMyPhotosTerm} = favouritesSlice.actions

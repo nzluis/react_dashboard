@@ -1,10 +1,10 @@
-import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
 import { AllPhotos } from "./pages/AllPhotos/AllPhotos"
 import { FavouritePhotos } from "./pages/FavouritePhotos/FavouritePhotos"
-import { NavBar } from './components/NavBar/NavBar'
+import { Root } from "./pages/Root/index";
 
 const appRouter = createBrowserRouter(createRoutesFromElements(
-  <Route path='/' element={<NavBar />}>
+  <Route path='/' element={<Root />}>
     <Route path='/' element={<AllPhotos />} />
     <Route path='/myphotos' element={<FavouritePhotos />} />
   </Route>

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { removePhoto, editDescription } from "../../features/favourites/favouritesSlice"
+import { removePhoto, editDescription, addMyPhotosTerm } from "../../features/favourites/favouritesSlice"
 import { Card, CardActions, CardContent, CardMedia, Button, Typography, Modal, Select, MenuItem, InputLabel, FormControl } from "@mui/material"
 import { TextareaAutosize } from "@mui/base"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -30,7 +30,8 @@ function getOrderedPhotos(photos, filter) {
 
 export const FavouritePhotos = () => {
 
-    const favourites = useSelector((state) => state.favourites)
+    const favourites = useSelector((state) => state.favourites.photos)
+    const term = useSelector((state) => state.favourites.term)
     const dispatch = useDispatch()
 
     const [editMode, setEditMode] = useState(false)
@@ -44,7 +45,7 @@ export const FavouritePhotos = () => {
         setEditMode(false)
     }
 
-    const filterBySearch = getOrderedPhotos(getFilteredPhotos(favourites, searchInput), orderBy)
+    const filterBySearch = getOrderedPhotos(getFilteredPhotos(favourites, term), orderBy)
     const { pathname } = useLocation()
     const isDesktopOrLaptop = useMediaQuery({
         query: '(min-width: 1000px)'
@@ -81,7 +82,7 @@ export const FavouritePhotos = () => {
                             className={styles.input}
                             value={searchInput}
                             onChange={(e) => { setSearchInput(e.target.value) }}
-                            onKeyDown={(e) => e.key === 'Enter' && setSearchInput('')}
+                            onKeyDown={(e) => e.key === 'Enter' && dispatch(addMyPhotosTerm(searchInput)) && setSearchInput('')}
                         />
                         <button style={{ display: 'none' }} type="submit"></button>
                     </form>
