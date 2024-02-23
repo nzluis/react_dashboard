@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
 import { removePhoto } from "../../features/favourites/favouritesSlice"
-import { Select, MenuItem, InputLabel, FormControl } from "@mui/material"
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import styles from './favouritesPhotos.module.css'
@@ -8,8 +7,8 @@ import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ModalComponent } from "../../components/Modal/ModalComponent";
-import { Header } from "../../components/Header/Header";
+import { ModalComponent } from "../Modal/ModalComponent";
+import { OrderSelector } from "../OrderSelector/OrderSelector";
 
 function getFilteredPhotos(photos, searchTerm) {
     return photos.filter(photo => photo.description.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -47,24 +46,8 @@ export const FavouritePhotos = () => {
 
     return (
         <>
-            <Header />
             <div className={styles.cards_container}>
-                <FormControl fullWidth >
-                    <InputLabel className={styles.select} id="orderby">Order by</InputLabel>
-                    <Select className={styles.select}
-                        labelId="orderby"
-                        id="selectOrder"
-                        value={orderBy}
-                        label="Order by"
-                        onChange={(e) => setOrderBy(e.target.value)}
-                    >
-                        <MenuItem value="created_at">Older</MenuItem>
-                        <MenuItem value="newer">Newer</MenuItem>
-                        <MenuItem value="width">Width</MenuItem>
-                        <MenuItem value="height">Height</MenuItem>
-                        <MenuItem value="likes">Likes</MenuItem>
-                    </Select>
-                </FormControl>
+                <OrderSelector setOrderBy={setOrderBy} orderBy={orderBy} />
                 {filterBySearch && filterBySearch.map((favouritePic) => {
                     return (
                         <div className={styles.card} key={favouritePic.id} >

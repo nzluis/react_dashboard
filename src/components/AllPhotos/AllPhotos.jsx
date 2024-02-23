@@ -1,23 +1,24 @@
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
 import styles from './allPhotos.module.css'
 import { CircularProgress } from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import { addPhoto } from "../../features/favourites/favouritesSlice"
+import { useDispatch, useSelector } from 'react-redux';
 import { searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
 import { getRandomSearchThunk, getTermSearchThunk } from "../../features/search/searchThunk"
-import { useLocation } from "react-router-dom";
-import { Header } from "../../components/Header/Header";
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
 
 export const AllPhotos = () => {
     const dispatch = useDispatch()
-    const [isLoading, setIsLoading] = useState(true)
     const allPhotos = useSelector(searchPhotos)
+    const [isLoading, setIsLoading] = useState(true)
     const status = useSelector(searchStatus)
     const error = useSelector(searchError)
     const term = useSelector(searchTerm)
+
     const { pathname } = useLocation()
 
     useEffect(() => {
@@ -62,27 +63,25 @@ export const AllPhotos = () => {
     }
 
     return (
-        <>
-            <Header />
-            <div className={styles.cards_container}>
-                {!isLoading && allPhotos ? allPhotos.map((pic) => {
-                    return (
-                        <div key={pic.id} className={styles.card}>
-                            <Zoom style={styles.img}>
-                                <img
-                                    src={pic.urls.regular}
-                                    width={400}
-                                    alt={pic.alt_description}
-                                    loading="lazy"
-                                />
-                            </Zoom>
-                            <AddCircleIcon fontSize="large" className={styles.addIcon} onClick={() => handleLike(pic)} />
-                        </div>
-                    )
-                }) :
-                    <CircularProgress />
-                }
-            </div >
-        </>
+        <div className={styles.cards_container}>
+            {!isLoading && allPhotos ? allPhotos.map((pic) => {
+                return (
+                    <div key={pic.id} className={styles.card}>
+                        <Zoom style={styles.img}>
+                            <img
+                                src={pic.urls.regular}
+                                width={400}
+                                alt={pic.alt_description}
+                                loading="lazy"
+                            />
+                        </Zoom>
+                        <AddCircleIcon fontSize="large" className={styles.addIcon} onClick={() => handleLike(pic)} />
+                    </div>
+                )
+            }) :
+                <CircularProgress />
+            }
+        </div >
     )
+
 }
