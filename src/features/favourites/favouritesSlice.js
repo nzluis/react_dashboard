@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = localStorage.getItem('favouritePhotos') ? JSON.parse(localStorage.getItem('favouritePhotos')) : {photos: [], term: ''}
+const initialState = localStorage.getItem('favouritePhotos') !== null ? {photos: JSON.parse(localStorage.getItem('favouritePhotos')), term:''} : {photos: [], term: ''}
 
 export const favouritesSlice = createSlice({
     name: 'favourites',
@@ -10,7 +10,8 @@ export const favouritesSlice = createSlice({
            if (!state.photos.find(photo => photo.id === action.payload.id)) state.photos.push(action.payload)
         },
         removePhoto: (state, action) => {
-            return  state.photos.filter(photo => photo.id !== action.payload) 
+            // return state.photos.filter(photo => photo.id !== action.payload) 
+            state.photos.splice(state.photos.findIndex(photo => photo.id === action.payload), 1)
         },
         editDescription: (state, action) => {
             const favouriteToEdit = state.photos.find(photo => photo.id === action.payload.id)
