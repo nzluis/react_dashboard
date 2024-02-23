@@ -66,7 +66,7 @@ export const NavBar = () => {
                                     className={styles.input}
                                     value={searchInput}
                                     onChange={(e) => { setSearchInput(e.target.value) }}
-                                    placeholder={root ? "LOOK FOR A PICTURE..." : "SEARCH ON YOUR PHOTOS..."}
+                                    placeholder="SEARCH..."
                                 />
                                 <button style={{ display: 'none' }} type="submit"></button>
                             </form>

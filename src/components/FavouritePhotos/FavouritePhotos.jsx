@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { removePhoto } from "../../features/favourites/favouritesSlice"
+import { favouritePhotos, removePhoto } from "../../features/favourites/favouritesSlice"
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import styles from './favouritesPhotos.module.css'
@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ModalComponent } from "../Modal/ModalComponent";
 import { OrderSelector } from "../OrderSelector/OrderSelector";
+import toast from 'react-hot-toast';
 
 function getFilteredPhotos(photos, searchTerm) {
     return photos.filter(photo => photo.description.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -21,7 +22,7 @@ function getOrderedPhotos(photos, filter) {
 
 export const FavouritePhotos = () => {
 
-    const favourites = useSelector((state) => state.favourites.photos)
+    const favourites = useSelector(favouritePhotos)
     const term = useSelector((state) => state.favourites.term)
     const [selectedPic, setSelectedPic] = useState({})
     const [orderBy, setOrderBy] = useState('')
@@ -29,6 +30,7 @@ export const FavouritePhotos = () => {
     const dispatch = useDispatch()
     const filterBySearch = getOrderedPhotos(getFilteredPhotos(favourites, term), orderBy)
     const { pathname } = useLocation()
+    const notifySuccess = () => toast.success('Removed successfully')
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -42,6 +44,11 @@ export const FavouritePhotos = () => {
     function handleModal(photo) {
         setSelectedPic(photo)
         setOpen(true)
+    }
+
+    function handleRemove(photo) {
+        dispatch(removePhoto(photo.id))
+        notifySuccess()
     }
 
     return (
@@ -59,7 +66,7 @@ export const FavouritePhotos = () => {
                                 />
                             </Zoom>
                             <InfoIcon className={styles.infoIcon} fontSize="large" onClick={() => handleModal(favouritePic)} />
-                            <RemoveCircleIcon className={styles.removeIcon} fontSize="large" onClick={() => dispatch(removePhoto(favouritePic.id))} />
+                            <RemoveCircleIcon className={styles.removeIcon} fontSize="large" onClick={() => handleRemove(favouritePic)} />
                         </div>
                     )
                 })}

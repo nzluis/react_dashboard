@@ -56,17 +56,21 @@ img {
     .infoIcon{
         position: absolute;
         top: 75%;
-        left: 80%;
+        left: 60%;
     }
 
     .removeIcon{
         position: absolute;
         top: 75%;
-        left: 60%;
+        left: 80%;
     }
     
     .infoIcon:hover, .removeIcon:hover {
         transform: scale(1.3);
+    } 
+
+    .infoIcon:active, .removeIcon:active {
+        transform: scale(1.2);
     } 
 
 }

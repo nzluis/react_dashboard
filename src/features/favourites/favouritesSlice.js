@@ -30,3 +30,4 @@ export const favouritesSlice = createSlice({
 })
 
 export const {addPhoto, removePhoto, editDescription, addMyPhotosTerm, clearMyPhotosTerm} = favouritesSlice.actions
+export const favouritePhotos = (state) => state.favourites.photos
