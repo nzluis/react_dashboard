@@ -10,23 +10,10 @@ const appRouter = createBrowserRouter(createRoutesFromElements(
   </Route>
 ));
 
-function App() {
+export default function App() {
   return (
     <>
       <RouterProvider router={appRouter} />
     </>
   )
 }
-
-export default App
-
-// export default function App() {
-//   return (
-//     <>
-//       <NavBar />
-//       <AllPhotos />
-//       <FavouritePhotos />
-//     </>
-//   )
-// }
-
