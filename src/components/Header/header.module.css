@@ -14,7 +14,7 @@ body {
     width: 50px;
     position: absolute;
     left: .8em;
-    bottom: .8em;
+    bottom: .6em;
     color: #494e5398;;
 }
 
@@ -52,8 +52,8 @@ body {
 .first_column {
     display: flex;
     flex-direction: column;
-    width: 70%;
-    margin: 0 3em 2em 5em;
+    width: 80%;
+    margin: 0 3em 2em 10em;
 }
 
 .second_column {
