@@ -73,8 +73,8 @@ export const NavBar = () => {
                         </div>
                     )}
                     <div className={styles.selector}>
-                        <NavLink onClick={() => dispatch(clearMyPhotosTerm())} className={({ isActive }) => isActive ? `${styles.navLink_active}` : `${styles.navLink}`} to='/' >ALL</NavLink>
-                        <NavLink className={({ isActive }) => isActive ? `${styles.navLink_active}` : `${styles.navLink}`} to='/myphotos'>MY PHOTOS</NavLink>
+                        <NavLink onClick={() => dispatch(clearMyPhotosTerm()) && setSearchInput('')} className={({ isActive }) => isActive ? `${styles.navLink_active}` : `${styles.navLink}`} to='/' >ALL</NavLink>
+                        <NavLink onClick={() => setSearchInput('')} className={({ isActive }) => isActive ? `${styles.navLink_active}` : `${styles.navLink}`} to='/myphotos'>MY PHOTOS</NavLink>
                     </div>
                 </div >
             </div>
