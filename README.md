@@ -1,4 +1,4 @@
-# React Dashboard
+# :camera: REACT DASHBOARD :camera:
 
 ## Buscador de fotografías a través de la Api de Unsplash
 
