@@ -40,7 +40,7 @@ export const NavBar = () => {
                             <form className={styles.form} onSubmit={(e) => root ? allPhotos_handleSubmit(e) : favouritePhotos_handleSubmit(e)}>
                                 {searchTerm === '' && searchInput == '' ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                                </svg> : <svg onClick={() => dispatch(clearMyPhotosTerm()) && setSearchInput('')} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>
+                                </svg> : <svg style={{ cursor: 'pointer' }} onClick={() => dispatch(clearMyPhotosTerm()) && setSearchInput('')} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>}
                                 <input
