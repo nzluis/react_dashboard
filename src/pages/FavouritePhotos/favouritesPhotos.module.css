@@ -13,14 +13,16 @@ body {
 }
 
 .card {
-    position:relative
+    position:relative;
+    object-fit: cover
 }
 
 .infoIcon, .removeIcon {
    position: static;
     cursor: pointer;
     transform: scale(1.2);
-    opacity: 15%; 
+    opacity: 25%; 
+    color: white;
 }
 
 .infoIcon{
@@ -43,6 +45,10 @@ body {
 
 .select {
     margin: 2em 45% 1em 45%
+}
+
+img {
+    height: 280px;
 }
 
 @media only screen and (max-width: 1000px) {
