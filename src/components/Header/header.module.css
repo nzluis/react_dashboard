@@ -1,8 +1,8 @@
 body {
     font-family: Roboto;
 }
+
 .container {
-    background-image: url("../../assets/rishab-lamichhane-r1Y2npWGKhU-unsplash.jpg");
     background-size:cover;
     background-position:bottom;
     height: 35em;
@@ -10,25 +10,12 @@ body {
     align-items: end;
 }
 
-.h1{
-    font-size: 7rem;
-    margin: 0;
-    color:rgba(255, 255, 255, 0.381);
-    font-weight: 400;
-    margin-top: 1.5rem;
-}
-
-.form {
-    margin-right: 5em;
-    margin-left: .8em;
-    position: relative;
-}
-
 .icon{
     width: 50px;
     position: absolute;
     left: .8em;
-    bottom: .8em;
+    bottom: .6em;
+    color: #494e5398;;
 }
 
 
@@ -47,11 +34,26 @@ body {
 
 }
 
+
+.h1{
+    font-size: 7rem;
+    margin: 0;
+    color:rgba(255, 255, 255, 0.381);
+    font-weight: 400;
+    margin-top: 1.5rem;
+}
+
+.form {
+    margin-right: 5em;
+    margin-left: .8em;
+    position: relative;
+}
+
 .first_column {
     display: flex;
     flex-direction: column;
-    width: 70%;
-    margin: 0 3em 2em 6em;
+    width: 80%;
+    margin: 0 3em 2em 10em;
 }
 
 .second_column {
@@ -76,4 +78,4 @@ body {
     width: 65%;
     margin-bottom: 1.5em;
 
-}
+} 

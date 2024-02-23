@@ -1,0 +1,9 @@
+.select {
+    margin: 2em 45% 1em 45%
+}
+
+@media only screen and (max-width: 1000px) {
+    .select {
+    margin: 2em 25% 1em 25%
+    }
+}
