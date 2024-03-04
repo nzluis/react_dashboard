@@ -69,6 +69,14 @@ body {
     position:relative;
 }
 
+.card:hover .addIcon {
+    opacity: 100%;
+}
+
+.card:hover img {
+    filter: brightness(80%);
+}
+
 .addIcon {
     position: absolute;
     top: 50%;
@@ -79,7 +87,6 @@ body {
     color: white;
 }
 .addIcon:hover {
-    opacity: 100%;
     transform: scale(1.1) translate(-50%, -50%);
 }
 

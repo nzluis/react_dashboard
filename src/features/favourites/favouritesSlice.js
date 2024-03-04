@@ -16,15 +16,12 @@ export const favouritesSlice = createSlice({
         editDescription: (state, action) => {
             const favouriteToEdit = state.photos.find(photo => photo.id === action.payload.id)
             favouriteToEdit.description = action.payload.description
-            return state
         },
         addMyPhotosTerm: (state, action) => {
             state.term = action.payload
-            return state
         },
         clearMyPhotosTerm: (state) => {
             state.term = ''
-            return state
         }
     }
 })

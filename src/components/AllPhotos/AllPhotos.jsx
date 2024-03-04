@@ -6,9 +6,8 @@ import 'react-medium-image-zoom/dist/styles.css'
 import { addPhoto, favouritePhotos } from "../../features/favourites/favouritesSlice"
 import { useDispatch, useSelector } from 'react-redux';
 import { searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
-import { getRandomSearchThunk, getTermSearchThunk } from "../../features/search/searchThunk"
+import { getSearchThunk } from "../../features/search/searchThunk"
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 export const AllPhotos = () => {
@@ -22,29 +21,13 @@ export const AllPhotos = () => {
     const notifySuccess = () => toast.success('Saved successfully');
     const notifyExist = () => toast.error('Already saved');
 
-    const { pathname } = useLocation()
-
     useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [pathname])
-
-    useEffect(() => {
-        if (term !== '') {
-            if (status === 'idle') {
-                dispatch(getTermSearchThunk(term))
-            } else if (status === 'pending') {
-                setIsLoading(true)
-            } else if (status === 'fulfilled') {
-                setIsLoading(false)
-            }
-        } else if (term === '') {
-            if (status === 'idle') {
-                dispatch(getRandomSearchThunk())
-            } else if (status === 'pending') {
-                setIsLoading(true)
-            } else if (status === 'fulfilled') {
-                setIsLoading(false)
-            }
+        if (status === 'idle') {
+            dispatch(getSearchThunk(term))
+        } else if (status === 'pending') {
+            setIsLoading(true)
+        } else if (status === 'fulfilled') {
+            setIsLoading(false)
         } else {
             alert(`Sorry, there was an error: ${error}`)
         }
