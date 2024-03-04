@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getTermSearchThunk, getRandomSearchThunk } from "./searchThunk";
+import { getSearchThunk } from "./searchThunk";
 
 export const searchSlice = createSlice({
     name: 'search',
@@ -22,26 +22,15 @@ export const searchSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getTermSearchThunk.fulfilled,(search, action) => {
+            .addCase(getSearchThunk.fulfilled,(search, action) => {
                 search.photos = action.payload
                 search.status ='fulfilled'
             })
-            .addCase(getTermSearchThunk.rejected,(search, action) => {
+            .addCase(getSearchThunk.rejected,(search, action) => {
                 search.status = 'rejected'
                 search.error = action.error.message
             })
-            .addCase(getTermSearchThunk.pending,(search) => {
-                search.status = 'pending'
-            })
-             .addCase(getRandomSearchThunk.fulfilled,(search, action) => {
-                search.photos = action.payload
-                search.status ='fulfilled'
-            })
-            .addCase(getRandomSearchThunk.rejected,(search, action) => {
-                search.status = 'rejected'
-                search.error = action.error.message
-            })
-            .addCase(getRandomSearchThunk.pending,(search) => {
+            .addCase(getSearchThunk.pending,(search) => {
                 search.status = 'pending'
             })
     }
