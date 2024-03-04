@@ -96,7 +96,7 @@
     
     .form {
         margin: unset;
-        width: 70%;
+        width: 80%;
     }
     .searchContainer {
         display: flex;
@@ -104,12 +104,12 @@
         justify-content: space-around;
         width: 100%;
         align-items: center;
+        gap: 5px;
     }
     
     .container {
         flex-direction: column;
         margin-right: 20px;
         margin-left: 5px;
-    
     }
 }
