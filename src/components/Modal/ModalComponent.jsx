@@ -30,14 +30,14 @@ export const ModalComponent = ({ open, setOpen, selectedPic, favourites }) => {
             aria-describedby="modal-modal-description"
         >
             <Card sx={{
-                maxWidth: 345,
+                minWidth: 320,
                 position: 'absolute',
                 left: '50%',
                 top: '50%',
                 transform: 'translate(-50%, -50%)'
             }} >
                 <CardMedia
-                    sx={{ width: '425px' }}
+                    sx={{ width: "100%" }}
                     image={selectedPic.src_preview}
                     title={selectedPic.alt_description}
                     component='img'
