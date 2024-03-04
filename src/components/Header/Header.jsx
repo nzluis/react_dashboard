@@ -1,16 +1,12 @@
 import { useState } from "react"
 import styles from "./header.module.css"
 import { addMyPhotosTerm } from "../../features/favourites/favouritesSlice"
-import { useMediaQuery } from 'react-responsive'
 import { useLocation } from "react-router-dom"
 import { addTerm, getReadyNewRequest } from "../../features/search/searchSlice"
 import { useDispatch } from "react-redux"
 
 
 export const Header = () => {
-    const isDesktopOrLaptop = useMediaQuery({
-        query: '(min-width: 1000px)'
-    })
     const dispatch = useDispatch()
     const [searchInput, setSearchInput] = useState('')
 
@@ -33,7 +29,7 @@ export const Header = () => {
     const backgroundFavourites = "https://images.unsplash.com/photo-1432839318976-b5c5785ce43f?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     return (
         <>
-            {isDesktopOrLaptop && <div className={styles.container} style={{
+            {<div className={styles.container} style={{
                 backgroundImage: `url(${root ? backgroundAll : backgroundFavourites})`
             }}>
                 <div className={styles.first_column}>
