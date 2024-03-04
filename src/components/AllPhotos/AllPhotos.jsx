@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { searchPhotos, searchError, searchStatus, searchTerm } from "../../features/search/searchSlice"
 import { getRandomSearchThunk, getTermSearchThunk } from "../../features/search/searchThunk"
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 export const AllPhotos = () => {
@@ -21,12 +20,6 @@ export const AllPhotos = () => {
     const term = useSelector(searchTerm)
     const notifySuccess = () => toast.success('Saved successfully');
     const notifyExist = () => toast.error('Already saved');
-
-    const { pathname } = useLocation()
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [pathname])
 
     useEffect(() => {
         if (term !== '') {

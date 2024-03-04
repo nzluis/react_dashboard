@@ -4,7 +4,7 @@ import { Home } from "./pages/Home/Home";
 import { MyPhotos } from "./pages/MyPhotos/MyPhotos";
 
 const appRouter = createBrowserRouter(createRoutesFromElements(
-  <Route path='/' element={<Root />}>
+  <Route element={<Root />}>
     <Route path='/' element={<Home />} />
     <Route path='/myphotos' element={<MyPhotos />} />
   </Route>
